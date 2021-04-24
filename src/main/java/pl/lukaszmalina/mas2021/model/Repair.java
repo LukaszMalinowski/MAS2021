@@ -3,6 +3,9 @@ package pl.lukaszmalina.mas2021.model;
 import pl.lukaszmalina.mas2021.exception.MechanicIsRequiredException;
 import pl.lukaszmalina.mas2021.exception.TooManyMechanicsException;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -114,6 +117,24 @@ public class Repair implements Serializable {
         }
 
         totalRepairs++;
+    }
+
+    public static void writeExtend (ObjectOutputStream stream) {
+        try {
+            stream.writeObject(extension);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExtend (ObjectInputStream stream) {
+        try {
+            extension = (ArrayList<Repair>) stream.readObject();
+        }
+        catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private static BigDecimal getAverageCost() {

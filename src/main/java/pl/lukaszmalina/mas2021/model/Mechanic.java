@@ -1,5 +1,8 @@
 package pl.lukaszmalina.mas2021.model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -50,6 +53,24 @@ public class Mechanic implements Serializable {
 
     public void setHourlyRate(BigDecimal hourlyRate) {
         this.hourlyRate = hourlyRate;
+    }
+
+    public static void writeExtend (ObjectOutputStream stream) {
+        try {
+            stream.writeObject(extension);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExtend (ObjectInputStream stream) {
+        try {
+            extension = (ArrayList<Mechanic>) stream.readObject();
+        }
+        catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
