@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Company implements Serializable {
 
-    private static final List<Company> EXTEND = new ArrayList<>();
+    private static List<Company> extension = new ArrayList<>();
 
     private String name;
 
@@ -19,11 +19,11 @@ public class Company implements Serializable {
         this.address = address;
         this.taxNumber = taxNumber;
 
-        EXTEND.add(this);
+        extension.add(this);
     }
 
-    public static List<Company> getEXTEND() {
-        return EXTEND;
+    public static List<Company> getExtension() {
+        return extension;
     }
 
     public String getName() {
@@ -48,5 +48,14 @@ public class Company implements Serializable {
 
     public void setTaxNumber(String taxNumber) {
         this.taxNumber = taxNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "name='" + name + '\'' +
+                ", address=" + address +
+                ", taxNumber='" + taxNumber + '\'' +
+                '}';
     }
 }

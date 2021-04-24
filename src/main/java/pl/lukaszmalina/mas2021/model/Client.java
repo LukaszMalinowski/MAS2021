@@ -1,11 +1,15 @@
 package pl.lukaszmalina.mas2021.model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client {
+public class Client implements Serializable {
 
-    private static final List<Client> EXTENT = new ArrayList<>();
+    private static List<Client> extension = new ArrayList<>();
 
     private String name;
 
@@ -34,7 +38,11 @@ public class Client {
         this.address = address;
         this.company = company;
 
-        EXTENT.add(this);
+        extension.add(this);
+    }
+
+    public static List<Client> getExtension() {
+        return extension;
     }
 
     public String getName() {
@@ -83,5 +91,35 @@ public class Client {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public static void writeExtend (ObjectOutputStream stream) {
+        try {
+            stream.writeObject(extension);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExtend (ObjectInputStream stream) {
+        try {
+            extension = (ArrayList<Client>) stream.readObject();
+        }
+        catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", address=" + address +
+                ", company=" + company +
+                '}';
     }
 }

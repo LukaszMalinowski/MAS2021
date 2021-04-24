@@ -1,12 +1,13 @@
 package pl.lukaszmalina.mas2021.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Car {
+public class Car implements Serializable {
 
-    private static final List<Car> EXTENT = new ArrayList<>();
+    private static List<Car> extension = new ArrayList<>();
 
     private String registrationNumber;
 
@@ -34,7 +35,11 @@ public class Car {
         this.netEnginePower = netEnginePower;
         this.weight = weight;
 
-        EXTENT.add(this);
+        extension.add(this);
+    }
+
+    public static List<Car> getExtension() {
+        return extension;
     }
 
     public String getRegistrationNumber() {

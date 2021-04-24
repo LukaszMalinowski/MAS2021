@@ -1,13 +1,14 @@
 package pl.lukaszmalina.mas2021.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Mechanic {
+public class Mechanic implements Serializable {
 
-    private static final List<Mechanic> EXTEND = new ArrayList<>();
+    private static List<Mechanic> extension = new ArrayList<>();
 
     private String name;
 
@@ -20,7 +21,11 @@ public class Mechanic {
         this.surname = surname;
         this.hourlyRate = hourlyRate;
 
-        EXTEND.add(this);
+        extension.add(this);
+    }
+
+    public static List<Mechanic> getExtension() {
+        return extension;
     }
 
     public String getName() {

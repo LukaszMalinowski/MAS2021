@@ -3,6 +3,7 @@ package pl.lukaszmalina.mas2021.model;
 import pl.lukaszmalina.mas2021.exception.MechanicIsRequiredException;
 import pl.lukaszmalina.mas2021.exception.TooManyMechanicsException;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -11,9 +12,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-public class Repair {
+public class Repair implements Serializable {
 
-    private static final List<Repair> EXTEND = new ArrayList<>();
+    private static List<Repair> extension = new ArrayList<>();
 
     private String description;
 
@@ -51,7 +52,11 @@ public class Repair {
         this.returnDateTime = returnDateTime;
         this.cost = cost;
 
-        EXTEND.add(this);
+        extension.add(this);
+    }
+
+    public static List<Repair> getExtension() {
+        return extension;
     }
 
     public String getDescription() {

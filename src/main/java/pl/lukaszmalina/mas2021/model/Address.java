@@ -1,12 +1,13 @@
 package pl.lukaszmalina.mas2021.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Address {
+public class Address implements Serializable {
 
-    private static final List<Address> EXTENT = new ArrayList<>();
+    private static List<Address> extension = new ArrayList<>();
 
     private String street;
 
@@ -30,7 +31,11 @@ public class Address {
         this.city = city;
         this.zipcode = zipcode;
 
-        EXTENT.add(this);
+        extension.add(this);
+    }
+
+    public static List<Address> getExtension() {
+        return extension;
     }
 
     public String getStreet() {
@@ -71,5 +76,16 @@ public class Address {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "street='" + getStreet() + '\'' +
+                ", houseNumber='" + getHouseNumber() + '\'' +
+                ", apartmentNumber='" + getApartmentNumber() + '\'' +
+                ", city='" + getCity() + '\'' +
+                ", zipcode='" + getZipcode() + '\'' +
+                '}';
     }
 }
