@@ -2,7 +2,7 @@ package pl.lukaszmalina.mas2021.model;
 
 import java.math.BigDecimal;
 
-public class Truck extends Car{
+public class Truck extends Car {
 
     public Truck(String registrationNumber, String vinNumber, int productionYear, String mark, String model,
                  BigDecimal netEnginePower, double weight) {

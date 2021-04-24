@@ -1,6 +1,11 @@
 package pl.lukaszmalina.mas2021.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Client {
+
+    private static final List<Client> EXTENT = new ArrayList<>();
 
     private String name;
 
@@ -28,6 +33,8 @@ public class Client {
         this.email = email;
         this.address = address;
         this.company = company;
+
+        EXTENT.add(this);
     }
 
     public String getName() {

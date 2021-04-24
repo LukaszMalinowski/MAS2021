@@ -1,9 +1,13 @@
 package pl.lukaszmalina.mas2021.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Mechanic {
+
+    private static final List<Mechanic> EXTEND = new ArrayList<>();
 
     private String name;
 
@@ -15,6 +19,8 @@ public class Mechanic {
         this.name = name;
         this.surname = surname;
         this.hourlyRate = hourlyRate;
+
+        EXTEND.add(this);
     }
 
     public String getName() {

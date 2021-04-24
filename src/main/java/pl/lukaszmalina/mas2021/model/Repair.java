@@ -6,10 +6,14 @@ import pl.lukaszmalina.mas2021.exception.TooManyMechanicsException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 public class Repair {
+
+    private static final List<Repair> EXTEND = new ArrayList<>();
 
     private String description;
 
@@ -46,6 +50,8 @@ public class Repair {
         this.receiveDateTime = receiveDateTime;
         this.returnDateTime = returnDateTime;
         this.cost = cost;
+
+        EXTEND.add(this);
     }
 
     public String getDescription() {
@@ -110,5 +116,12 @@ public class Repair {
             return BigDecimal.valueOf(0);
 
         return totalCost.divide(BigDecimal.valueOf(totalRepairs), RoundingMode.FLOOR).setScale(2, RoundingMode.FLOOR);
+    }
+
+    private static BigDecimal getAverageCost(int scale) {
+        if (totalRepairs == 0)
+            return BigDecimal.valueOf(0);
+
+        return totalCost.divide(BigDecimal.valueOf(totalRepairs), RoundingMode.FLOOR).setScale(scale, RoundingMode.FLOOR);
     }
 }

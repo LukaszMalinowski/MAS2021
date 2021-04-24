@@ -1,8 +1,12 @@
 package pl.lukaszmalina.mas2021.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Address {
+
+    private static final List<Address> EXTENT = new ArrayList<>();
 
     private String street;
 
@@ -25,6 +29,8 @@ public class Address {
         this.apartmentNumber = apartmentNumber;
         this.city = city;
         this.zipcode = zipcode;
+
+        EXTENT.add(this);
     }
 
     public String getStreet() {

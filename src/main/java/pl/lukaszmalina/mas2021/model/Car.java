@@ -1,8 +1,12 @@
 package pl.lukaszmalina.mas2021.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Car {
+
+    private static final List<Car> EXTENT = new ArrayList<>();
 
     private String registrationNumber;
 
@@ -29,6 +33,8 @@ public class Car {
         this.model = model;
         this.netEnginePower = netEnginePower;
         this.weight = weight;
+
+        EXTENT.add(this);
     }
 
     public String getRegistrationNumber() {
