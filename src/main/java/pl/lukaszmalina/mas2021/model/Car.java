@@ -16,16 +16,19 @@ public class Car {
 
     private BigDecimal netEnginePower;
 
+    private double weight;
+
     private final static BigDecimal HORSE_POWER_CONVERTER = BigDecimal.valueOf(1.36);
 
     public Car(String registrationNumber, String vinNumber, int productionYear, String mark, String model,
-               BigDecimal netEnginePower) {
+               BigDecimal netEnginePower, double weight) {
         this.registrationNumber = registrationNumber;
         this.vinNumber = vinNumber;
         this.productionYear = productionYear;
         this.mark = mark;
         this.model = model;
         this.netEnginePower = netEnginePower;
+        this.weight = weight;
     }
 
     public String getRegistrationNumber() {
@@ -76,7 +79,20 @@ public class Car {
         this.netEnginePower = netEnginePower;
     }
 
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    //Atrybut pochodny
     public BigDecimal getHorsePower() {
-        return netEnginePower.multiply(HORSE_POWER_CONVERTER);
+        return netEnginePower.multiply(HORSE_POWER_CONVERTER).setScale(2, BigDecimal.ROUND_FLOOR);
+    }
+
+    public boolean isWeightAllowed() {
+        return getWeight() <= 3500d;
     }
 }

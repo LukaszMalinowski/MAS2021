@@ -1,6 +1,7 @@
 package pl.lukaszmalina.mas2021.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Mechanic {
 
@@ -38,5 +39,20 @@ public class Mechanic {
 
     public void setHourlyRate(BigDecimal hourlyRate) {
         this.hourlyRate = hourlyRate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Mechanic mechanic = (Mechanic)o;
+        return Objects.equals(name, mechanic.name) &&
+                Objects.equals(surname, mechanic.surname) &&
+                Objects.equals(hourlyRate, mechanic.hourlyRate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, hourlyRate);
     }
 }

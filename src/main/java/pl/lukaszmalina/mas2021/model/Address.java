@@ -1,11 +1,14 @@
 package pl.lukaszmalina.mas2021.model;
 
+import java.util.Optional;
+
 public class Address {
 
     private String street;
 
     private String houseNumber;
 
+    //Atrybut opcjonalny
     private String apartmentNumber;
 
     private String city;
@@ -41,7 +44,7 @@ public class Address {
     }
 
     public String getApartmentNumber() {
-        return apartmentNumber;
+        return Optional.ofNullable(apartmentNumber).orElse("");
     }
 
     public void setApartmentNumber(String apartmentNumber) {

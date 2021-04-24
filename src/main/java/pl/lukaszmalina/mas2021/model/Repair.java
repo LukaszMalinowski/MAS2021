@@ -1,28 +1,51 @@
 package pl.lukaszmalina.mas2021.model;
 
+import pl.lukaszmalina.mas2021.exception.MechanicIsRequiredException;
+import pl.lukaszmalina.mas2021.exception.TooManyMechanicsException;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collections;
+import java.util.Set;
 
 public class Repair {
 
     private String description;
 
-    private List<Mechanic> mechanics;
+    //Atrybut powtarzalny z ograniczeniem
+    private final Set<Mechanic> mechanics;
 
     private LocalDateTime receiveDateTime;
 
     private LocalDateTime returnDateTime;
 
-    public Repair(String description, List<Mechanic> mechanics, LocalDateTime receiveDateTime) {
-        this(description,mechanics,receiveDateTime, null);
+    private BigDecimal cost;
+
+    private static BigDecimal totalCost;
+
+    private static int totalRepairs;
+
+    public Repair(String description, Set<Mechanic> mechanics, LocalDateTime receiveDateTime, BigDecimal cost) throws
+            TooManyMechanicsException, MechanicIsRequiredException {
+        this(description,mechanics,receiveDateTime, null, cost);
     }
 
-    public Repair(String description, List<Mechanic> mechanics, LocalDateTime receiveDateTime,
-                  LocalDateTime returnDateTime) {
+    public Repair(String description, Set<Mechanic> mechanics, LocalDateTime receiveDateTime,
+                  LocalDateTime returnDateTime, BigDecimal cost) throws TooManyMechanicsException, MechanicIsRequiredException {
+        if(mechanics == null || mechanics.size() == 0)
+            throw new MechanicIsRequiredException("You need to provide at least one mechanic.");
+
+        if(mechanics.size() > 3)
+            throw new TooManyMechanicsException("One repair can only have three mechanics.");
+
+        addTotalCost(cost);
+
         this.description = description;
         this.mechanics = mechanics;
         this.receiveDateTime = receiveDateTime;
         this.returnDateTime = returnDateTime;
+        this.cost = cost;
     }
 
     public String getDescription() {
@@ -33,12 +56,19 @@ public class Repair {
         this.description = description;
     }
 
-    public List<Mechanic> getMechanics() {
-        return mechanics;
+    public Set<Mechanic> getMechanics() {
+        return Collections.unmodifiableSet(mechanics);
     }
 
-    public void setMechanics(List<Mechanic> mechanics) {
-        this.mechanics = mechanics;
+    public boolean addMechanic(Mechanic mechanic) {
+        if (mechanics.size() >= 3)
+            return false;
+
+        return mechanics.add(mechanic);
+    }
+
+    public boolean removeMechanic(Mechanic mechanic) {
+        return mechanics.remove(mechanic);
     }
 
     public LocalDateTime getReceiveDateTime() {
@@ -55,5 +85,30 @@ public class Repair {
 
     public void setReturnDateTime(LocalDateTime returnDateTime) {
         this.returnDateTime = returnDateTime;
+    }
+
+    public BigDecimal getCost() {
+        return cost.setScale(2, RoundingMode.FLOOR);
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
+    }
+
+    private static void addTotalCost(BigDecimal cost) {
+        if (totalCost == null) {
+            totalCost = cost;
+        } else {
+            totalCost = totalCost.add(cost);
+        }
+
+        totalRepairs++;
+    }
+
+    private static BigDecimal getAverageCost() {
+        if (totalRepairs == 0)
+            return BigDecimal.valueOf(0);
+
+        return totalCost.divide(BigDecimal.valueOf(totalRepairs), RoundingMode.FLOOR).setScale(2, RoundingMode.FLOOR);
     }
 }

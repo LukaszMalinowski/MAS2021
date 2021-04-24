@@ -4,7 +4,7 @@ public class Client {
 
     private String name;
 
-    private String number;
+    private String surname;
 
     private String phoneNumber;
 
@@ -12,7 +12,23 @@ public class Client {
 
     private Address address;
 
+    //Atrybut złożony
     private Company company;
+
+    public Client(String name, String surname, String phoneNumber, String email,
+                  Address address) {
+        this(name, surname, phoneNumber, email, address, null);
+    }
+
+    public Client(String name, String surname, String phoneNumber, String email,
+                  Address address, Company company) {
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+        this.company = company;
+    }
 
     public String getName() {
         return name;
@@ -22,12 +38,12 @@ public class Client {
         this.name = name;
     }
 
-    public String getNumber() {
-        return number;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getPhoneNumber() {
