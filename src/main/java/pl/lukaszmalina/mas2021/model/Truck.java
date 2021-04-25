@@ -9,7 +9,6 @@ public class Truck extends Car {
         super(registrationNumber, vinNumber, productionYear, mark, model, netEnginePower, weight);
     }
 
-    //przesloniecie
     @Override
     public boolean isWeightAllowed() {
         return getWeight() <= 18000d;

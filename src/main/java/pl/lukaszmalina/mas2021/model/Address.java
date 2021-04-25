@@ -16,7 +16,6 @@ public class Address implements Serializable {
 
     private String houseNumber;
 
-    //Atrybut opcjonalny
     private String apartmentNumber;
 
     private String city;

@@ -21,7 +21,6 @@ public class Client implements Serializable {
 
     private Address address;
 
-    //Atrybut złożony
     private Company company;
 
     public Client(String name, String surname, String phoneNumber, String email,

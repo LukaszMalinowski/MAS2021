@@ -101,7 +101,6 @@ public class Car implements Serializable {
         this.weight = weight;
     }
 
-    //Atrybut pochodny
     public BigDecimal getHorsePower() {
         return netEnginePower.multiply(HORSE_POWER_CONVERTER).setScale(2, BigDecimal.ROUND_FLOOR);
     }

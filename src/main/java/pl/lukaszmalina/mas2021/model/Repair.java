@@ -21,7 +21,6 @@ public class Repair implements Serializable {
 
     private String description;
 
-    //Atrybut powtarzalny z ograniczeniem
     private final Set<Mechanic> mechanics;
 
     private LocalDateTime receiveDateTime;
