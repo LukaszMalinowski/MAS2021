@@ -1,8 +1,16 @@
 package pl.lukaszmalina.mas2021.model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Car {
+public class Car implements Serializable {
+
+    private static List<Car> extension = new ArrayList<>();
 
     private String registrationNumber;
 
@@ -16,16 +24,25 @@ public class Car {
 
     private BigDecimal netEnginePower;
 
+    private double weight;
+
     private final static BigDecimal HORSE_POWER_CONVERTER = BigDecimal.valueOf(1.36);
 
     public Car(String registrationNumber, String vinNumber, int productionYear, String mark, String model,
-               BigDecimal netEnginePower) {
+               BigDecimal netEnginePower, double weight) {
         this.registrationNumber = registrationNumber;
         this.vinNumber = vinNumber;
         this.productionYear = productionYear;
         this.mark = mark;
         this.model = model;
         this.netEnginePower = netEnginePower;
+        this.weight = weight;
+
+        extension.add(this);
+    }
+
+    public static List<Car> getExtension() {
+        return extension;
     }
 
     public String getRegistrationNumber() {
@@ -76,7 +93,37 @@ public class Car {
         this.netEnginePower = netEnginePower;
     }
 
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
     public BigDecimal getHorsePower() {
-        return netEnginePower.multiply(HORSE_POWER_CONVERTER);
+        return netEnginePower.multiply(HORSE_POWER_CONVERTER).setScale(2, BigDecimal.ROUND_FLOOR);
+    }
+
+    public boolean isWeightAllowed() {
+        return getWeight() <= 3500d;
+    }
+
+    public static void writeExtend (ObjectOutputStream stream) {
+        try {
+            stream.writeObject(extension);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExtend (ObjectInputStream stream) {
+        try {
+            extension = (ArrayList<Car>) stream.readObject();
+        }
+        catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

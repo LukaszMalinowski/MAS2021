@@ -1,6 +1,16 @@
 package pl.lukaszmalina.mas2021.model;
 
-public class Address {
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public class Address implements Serializable {
+
+    private static List<Address> extension = new ArrayList<>();
 
     private String street;
 
@@ -22,6 +32,12 @@ public class Address {
         this.apartmentNumber = apartmentNumber;
         this.city = city;
         this.zipcode = zipcode;
+
+        extension.add(this);
+    }
+
+    public static List<Address> getExtension() {
+        return extension;
     }
 
     public String getStreet() {
@@ -41,7 +57,7 @@ public class Address {
     }
 
     public String getApartmentNumber() {
-        return apartmentNumber;
+        return Optional.ofNullable(apartmentNumber).orElse("");
     }
 
     public void setApartmentNumber(String apartmentNumber) {
@@ -62,5 +78,34 @@ public class Address {
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public static void writeExtend (ObjectOutputStream stream) {
+        try {
+            stream.writeObject(extension);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readExtend (ObjectInputStream stream) {
+        try {
+            extension = (ArrayList<Address>) stream.readObject();
+        }
+        catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "street='" + getStreet() + '\'' +
+                ", houseNumber='" + getHouseNumber() + '\'' +
+                ", apartmentNumber='" + getApartmentNumber() + '\'' +
+                ", city='" + getCity() + '\'' +
+                ", zipcode='" + getZipcode() + '\'' +
+                '}';
     }
 }
