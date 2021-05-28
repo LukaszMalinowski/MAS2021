@@ -1,8 +1,14 @@
 package pl.lukaszmalina.mas2021.model;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Entity
 public class Car {
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private long id;
 
     private String registrationNumber;
 
@@ -18,14 +24,18 @@ public class Car {
 
     private final static BigDecimal HORSE_POWER_CONVERTER = BigDecimal.valueOf(1.36);
 
-    public Car(String registrationNumber, String vinNumber, int productionYear, String mark, String model,
-               BigDecimal netEnginePower) {
-        this.registrationNumber = registrationNumber;
-        this.vinNumber = vinNumber;
-        this.productionYear = productionYear;
-        this.mark = mark;
-        this.model = model;
-        this.netEnginePower = netEnginePower;
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
+    private Client owner;
+
+    public Car() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getRegistrationNumber() {
@@ -74,6 +84,14 @@ public class Car {
 
     public void setNetEnginePower(BigDecimal netEnginePower) {
         this.netEnginePower = netEnginePower;
+    }
+
+    public Client getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Client owner) {
+        this.owner = owner;
     }
 
     public BigDecimal getHorsePower() {

@@ -1,6 +1,15 @@
 package pl.lukaszmalina.mas2021.model;
 
+import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
+
+@Entity
 public class Client {
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private long id;
 
     private String name;
 
@@ -10,9 +19,24 @@ public class Client {
 
     private String email;
 
+    @OneToOne
     private Address address;
 
-    private Company company;
+    @OneToMany (targetEntity = Mechanic.class,
+            cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST},
+            mappedBy = "company")
+    private Set<Car> cars;
+
+    public Client() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -54,11 +78,11 @@ public class Client {
         this.address = address;
     }
 
-    public Company getCompany() {
-        return company;
+    public Set<Car> getCars() {
+        return cars;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setCars(Set<Car> cars) {
+        this.cars = cars;
     }
 }

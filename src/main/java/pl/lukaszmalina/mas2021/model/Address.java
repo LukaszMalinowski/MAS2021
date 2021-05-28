@@ -1,6 +1,13 @@
 package pl.lukaszmalina.mas2021.model;
 
+import javax.persistence.*;
+
+@Entity
 public class Address {
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private long id;
 
     private String street;
 
@@ -12,16 +19,15 @@ public class Address {
 
     private String zipcode;
 
-    public Address(String street, String houseNumber, String city, String zipcode) {
-        this(street, houseNumber, null , city, zipcode);
+    public Address() {
     }
 
-    public Address(String street, String houseNumber, String apartmentNumber, String city, String zipcode) {
-        this.street = street;
-        this.houseNumber = houseNumber;
-        this.apartmentNumber = apartmentNumber;
-        this.city = city;
-        this.zipcode = zipcode;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getStreet() {

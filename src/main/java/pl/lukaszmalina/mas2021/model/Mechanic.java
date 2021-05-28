@@ -1,8 +1,14 @@
 package pl.lukaszmalina.mas2021.model;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Entity
 public class Mechanic {
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private long id;
 
     private String name;
 
@@ -10,10 +16,18 @@ public class Mechanic {
 
     private BigDecimal hourlyRate;
 
-    public Mechanic(String name, String surname, BigDecimal hourlyRate) {
-        this.name = name;
-        this.surname = surname;
-        this.hourlyRate = hourlyRate;
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
+    private Company company;
+
+    public Mechanic() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -38,5 +52,13 @@ public class Mechanic {
 
     public void setHourlyRate(BigDecimal hourlyRate) {
         this.hourlyRate = hourlyRate;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }
