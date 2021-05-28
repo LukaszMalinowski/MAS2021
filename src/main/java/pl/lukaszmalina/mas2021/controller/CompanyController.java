@@ -11,7 +11,7 @@ import pl.lukaszmalina.mas2021.service.CompanyService;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/api/company")
+@RequestMapping ("/api/companies")
 public class CompanyController {
 
     private final CompanyService service;

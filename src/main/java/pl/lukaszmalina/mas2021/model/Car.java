@@ -2,6 +2,7 @@ package pl.lukaszmalina.mas2021.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 public class Car {
@@ -96,5 +97,18 @@ public class Car {
 
     public BigDecimal getHorsePower() {
         return netEnginePower.multiply(HORSE_POWER_CONVERTER);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car)o;
+        return Objects.equals(vinNumber, car.vinNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(vinNumber);
     }
 }
