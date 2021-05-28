@@ -43,4 +43,13 @@ public class CompanyService {
 
         mechanicRepository.save(mechanic);
     }
+
+    @Transactional
+    public void deleteCompany(long companyId) {
+        if(!companyRepository.findById(companyId).isPresent()) {
+            throw new CompanyNotFoundException(companyId);
+        }
+
+        companyRepository.deleteById(companyId);
+    }
 }
