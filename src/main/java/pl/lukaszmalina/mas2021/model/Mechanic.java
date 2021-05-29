@@ -4,6 +4,7 @@ import net.minidev.json.annotate.JsonIgnore;
 import pl.lukaszmalina.mas2021.dto.MechanicDto;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +23,7 @@ public class Mechanic {
     private BigDecimal hourlyRate;
 
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
-    @JsonIgnore
+    @NotNull
     private Company company;
 
     @OneToMany (mappedBy ="mechanic",cascade = CascadeType.ALL)
