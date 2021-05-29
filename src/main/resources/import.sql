@@ -5,3 +5,11 @@ INSERT INTO COMPANY (id, name, address_id, tax_number) VALUES (1, 'Company', 1, 
 INSERT INTO CLIENT (EMAIL, NAME, NUMBER, PHONE_NUMBER, ADDRESS_ID) VALUES ( 'jan@kowalski.pl', 'Jan', 'Kowalski', '500600700', 1 );
 
 INSERT INTO CAR (MARK, MODEL, NET_ENGINE_POWER, PRODUCTION_YEAR, REGISTRATION_NUMBER, VIN_NUMBER, OWNER_ID) VALUES ( 'Fiat', 'Punto', 60, 1996, 'WPR12345', '1234567890', 1 );
+
+INSERT INTO MECHANIC (HOURLY_RATE, NAME, SURNAME, COMPANY_ID) VALUES ( 30, 'Tadeusz', 'Nowak', 1 );
+INSERT INTO MECHANIC (HOURLY_RATE, NAME, SURNAME, COMPANY_ID) VALUES ( 25, 'Grzegorz', 'Lasocki', 1 );
+
+INSERT INTO REPAIR (id, cost, description, receive_date_time, return_date_time) VALUES ( 1, 160, 'Car was fixed', null, null );
+
+INSERT INTO MECHANIC_REPAIR (hours, notes, mechanic_id, repair_id) VALUES ( 6, 'Some notes', 1, 1 );
+INSERT INTO MECHANIC_REPAIR (hours, notes, mechanic_id, repair_id) VALUES ( 6, 'Some notes', 2, 1 );
