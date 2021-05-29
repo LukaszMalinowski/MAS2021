@@ -1,6 +1,5 @@
 package pl.lukaszmalina.mas2021.model;
 
-import net.minidev.json.annotate.JsonIgnore;
 import pl.lukaszmalina.mas2021.dto.MechanicDto;
 
 import javax.persistence.*;
@@ -22,11 +21,11 @@ public class Mechanic {
 
     private BigDecimal hourlyRate;
 
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
+    @ManyToOne (cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
     @NotNull
     private Company company;
 
-    @OneToMany (mappedBy ="mechanic",cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "mechanic", cascade = CascadeType.ALL)
     private List<MechanicRepair> repairs;
 
     public Mechanic() {
@@ -92,7 +91,8 @@ public class Mechanic {
         if (o == null || getClass() != o.getClass()) return false;
         Mechanic mechanic = (Mechanic)o;
         return Objects.equals(name, mechanic.name) && Objects.equals(surname,
-                                                                     mechanic.surname) && hourlyRate.compareTo(mechanic.hourlyRate) == 0;
+                                                                     mechanic.surname) && hourlyRate.compareTo(
+                mechanic.hourlyRate) == 0;
     }
 
     @Override
