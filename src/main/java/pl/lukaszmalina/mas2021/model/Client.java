@@ -1,5 +1,7 @@
 package pl.lukaszmalina.mas2021.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -22,9 +24,11 @@ public class Client {
     @OneToOne
     private Address address;
 
-    @OneToMany (targetEntity = Mechanic.class,
+    @JsonManagedReference
+    @OneToMany (targetEntity = Car.class,
             cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST},
-            mappedBy = "company")
+            fetch = FetchType.LAZY,
+            mappedBy = "owner")
     private Set<Car> cars;
 
     public Client() {

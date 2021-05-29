@@ -5,6 +5,7 @@ import pl.lukaszmalina.mas2021.dto.MechanicDto;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +24,9 @@ public class Mechanic {
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
     @JsonIgnore
     private Company company;
+
+    @OneToMany (mappedBy ="mechanic",cascade = CascadeType.ALL)
+    private List<MechanicRepair> repairs;
 
     public Mechanic() {
     }
@@ -71,6 +75,14 @@ public class Mechanic {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public List<MechanicRepair> getRepairs() {
+        return repairs;
+    }
+
+    public void setRepairs(List<MechanicRepair> repairs) {
+        this.repairs = repairs;
     }
 
     @Override

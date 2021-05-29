@@ -1,5 +1,7 @@
 package pl.lukaszmalina.mas2021.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -25,6 +27,7 @@ public class Car {
 
     private final static BigDecimal HORSE_POWER_CONVERTER = BigDecimal.valueOf(1.36);
 
+    @JsonBackReference
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
     private Client owner;
 
