@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static pl.lukaszmalina.mas2021.util.JwtUtil.EMAIL;
+
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -28,8 +30,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Value ("${authentication.jwt.secret}")
     private String secret;
-
-    private static final String EMAIL = "email";
 
     public JwtFilter(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -39,6 +39,11 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                     FilterChain filterChain) throws ServletException, IOException {
         String authorization = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (authorization == null || authorization.isEmpty()) {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+            return;
+        }
 
 
         String email = getEmail(authorization);
