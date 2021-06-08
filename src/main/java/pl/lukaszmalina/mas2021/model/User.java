@@ -34,7 +34,7 @@ public class User implements UserDetails {
 
     private String phoneNumber;
 
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL)
     private Address address;
 
     @JsonManagedReference
@@ -45,6 +45,18 @@ public class User implements UserDetails {
     private Set<Car> cars;
 
     public User() {
+    }
+
+    public User(long id, String password, String firstName, String lastName, String email, String phoneNumber,
+                Address address, Set<Car> cars) {
+        this.id = id;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.cars = cars;
     }
 
     public long getId() {

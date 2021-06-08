@@ -1,8 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "authentication.jwt.secret",
-      "type": "java.lang.String",
-      "description": "Description for authentication.jwt.secret."
-  }
-] }
