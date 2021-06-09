@@ -14,6 +14,8 @@ import java.util.Date;
 public class JwtUtil {
 
     public static final String EMAIL = "email";
+    public static final String ROLE = "role";
+    public static final String ID = "ID";
 
     @Value ("${authentication.jwt.secret}")
     private String secret;
@@ -25,7 +27,9 @@ public class JwtUtil {
         Date expiresDate = calendar.getTime();
 
         String jwt = JWT.create()
+                        .withClaim(ID, user.getId())
                         .withClaim(EMAIL, user.getEmail())
+                        .withClaim(ROLE, user.getRole().getAuthority())
                         .withIssuedAt(new Date())
                         .withExpiresAt(expiresDate)
                         .sign(Algorithm.HMAC512(secret));
