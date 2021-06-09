@@ -3,7 +3,9 @@ package pl.lukaszmalina.mas2021.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.lukaszmalina.mas2021.dto.UserDto;
+import pl.lukaszmalina.mas2021.model.Role;
 import pl.lukaszmalina.mas2021.model.User;
+import pl.lukaszmalina.mas2021.repository.RoleRepository;
 import pl.lukaszmalina.mas2021.repository.UserRepository;
 
 import javax.transaction.Transactional;
@@ -13,11 +15,13 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     public UserService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder) {
+                       PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     public boolean userExists(String email) {
@@ -25,7 +29,9 @@ public class UserService {
     }
 
     @Transactional
-    public User registerUser(UserDto userDto) {
+    public void registerUser(UserDto userDto) {
+        Role role = roleRepository.findById(1L).orElse(new Role(1L, "ROLE_USER"));
+
         User user = new User(
                 0,
                 passwordEncoder.encode(userDto.getPassword()),
@@ -34,9 +40,10 @@ public class UserService {
                 userDto.getEmail(),
                 userDto.getPhoneNumber(),
                 userDto.getAddress(),
-                null
+                null,
+                role
         );
 
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 }

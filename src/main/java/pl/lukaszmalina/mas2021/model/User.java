@@ -9,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 @Entity
@@ -44,11 +45,14 @@ public class User implements UserDetails {
             mappedBy = "owner")
     private Set<Car> cars;
 
+    @ManyToOne (cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private Role role;
+
     public User() {
     }
 
     public User(long id, String password, String firstName, String lastName, String email, String phoneNumber,
-                Address address, Set<Car> cars) {
+                Address address, Set<Car> cars, Role role) {
         this.id = id;
         this.password = password;
         this.firstName = firstName;
@@ -57,6 +61,7 @@ public class User implements UserDetails {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.cars = cars;
+        this.role = role;
     }
 
     public long getId() {
@@ -119,9 +124,17 @@ public class User implements UserDetails {
         this.cars = cars;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singleton(role);
     }
 
     @Override

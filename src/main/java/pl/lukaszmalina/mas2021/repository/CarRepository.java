@@ -6,7 +6,4 @@ import pl.lukaszmalina.mas2021.model.Car;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
-
-
-
 }
