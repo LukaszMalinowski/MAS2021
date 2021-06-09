@@ -1,6 +1,7 @@
 INSERT INTO ROLE VALUES (1, 'ROLE_USER' ), (2, 'ROLE_OWNER');
 
 INSERT INTO USER (EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, ROLE_ID) VALUES ('lukasz.malinowski10@gmail.com', 'Łukasz', 'Malinowski', '$2a$10$fFBNHqZJ27CRlhuehipebex7QXU9xHK9ORQKY8RURU59mLNQc0AJG', 1);
+INSERT INTO USER (EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, ROLE_ID) VALUES ('owner@owner.com', 'Service', 'Owner', '$2a$10$fFBNHqZJ27CRlhuehipebex7QXU9xHK9ORQKY8RURU59mLNQc0AJG', 2);
 
 INSERT INTO ADDRESS (id, street, house_number, apartment_number, city, zipcode) VALUES (1, 'Street', '10', '20', 'Warsaw', '12-345');
 

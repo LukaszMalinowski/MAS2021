@@ -28,8 +28,8 @@ public class Car {
     private final static BigDecimal HORSE_POWER_CONVERTER = BigDecimal.valueOf(1.36);
 
     @JsonBackReference
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
-    private Client owner;
+    @ManyToOne (cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
+    private User owner;
 
     public Car() {
     }
@@ -90,11 +90,11 @@ public class Car {
         this.netEnginePower = netEnginePower;
     }
 
-    public Client getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Client owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -41,7 +42,7 @@ public class User implements UserDetails {
     @JsonManagedReference
     @OneToMany (targetEntity = Car.class,
             cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST},
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             mappedBy = "owner")
     private Set<Car> cars;
 
@@ -49,6 +50,7 @@ public class User implements UserDetails {
     private Role role;
 
     public User() {
+        this.cars = new HashSet<>();
     }
 
     public User(long id, String password, String firstName, String lastName, String email, String phoneNumber,
