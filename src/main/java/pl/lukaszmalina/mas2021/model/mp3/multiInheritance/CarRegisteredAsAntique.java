@@ -21,7 +21,9 @@ public class CarRegisteredAsAntique extends Car {
     @Override
     public String toString() {
         return "CarRegisteredAsAntique{" +
-                "conservatorOpinion='" + conservatorOpinion + '\'' +
+                "mark='" + this.getMark() + '\'' +
+                ", model='" + this.getModel() + '\'' +
+                ", conservatorOpinion='" + conservatorOpinion + '\'' +
                 '}';
     }
 }

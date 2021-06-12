@@ -33,7 +33,9 @@ public class CarRegisteredNormally extends Car {
     @Override
     public String toString() {
         return "CarRegisteredNormally{" +
-                "insuranceValue=" + insuranceValue +
+                "mark='" + this.getMark() + '\'' +
+                ", model='" + this.getModel() + '\'' +
+                ", insuranceValue=" + insuranceValue +
                 ", nextOverviewDate=" + nextOverviewDate +
                 '}';
     }
