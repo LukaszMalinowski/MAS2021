@@ -3,6 +3,8 @@ package pl.lukaszmalina.mas2021.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -19,8 +21,12 @@ public class Car {
 
     private int productionYear;
 
+    @NotNull
+    @NotBlank
     private String mark;
 
+    @NotNull
+    @NotBlank
     private String model;
 
     private BigDecimal netEnginePower;
