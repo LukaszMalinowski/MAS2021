@@ -20,15 +20,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping ("/{userId}/cars")
     @PreAuthorize ("hasRole('USER')")
+    @PostMapping ("/{userId}/cars")
     public ResponseEntity<Void> addCar(@PathVariable long userId, @RequestBody Car car, Authentication authentication) {
         userService.addCar(car, userId, (User)authentication.getPrincipal());
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping ("/{userId}/cars")
     @PreAuthorize ("hasRole('USER')")
+    @GetMapping ("/{userId}/cars")
     public ResponseEntity<Set<Car>> getAllCars(@PathVariable long userId, Authentication authentication) {
         Set<Car> cars = userService.getAllUserCars(userId, (User)authentication.getPrincipal());
         return ResponseEntity.ok(cars);

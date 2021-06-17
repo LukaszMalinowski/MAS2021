@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,9 +17,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 @Configuration
+@EnableGlobalMethodSecurity (prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
@@ -64,14 +67,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/v2/api-docs").permitAll()
             .antMatchers("/swagger-ui/**").permitAll()
             .antMatchers("/swagger-resources/**").permitAll()
-            .anyRequest().authenticated();
+            .anyRequest().authenticated()
+            .and().cors().configurationSource(corsConfigurationSource())
+            .and().csrf().disable();
 
-        http.cors().configurationSource(corsConfigurationSource());
-        http.csrf().disable();
-
-        http.headers().frameOptions().disable();
+        http.exceptionHandling()
+            .authenticationEntryPoint(
+                    (request, response, ex) -> response.sendError(
+                            HttpServletResponse.SC_UNAUTHORIZED,
+                            ex.getMessage()
+                    )
+            )
+            .and();
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http.headers().frameOptions().disable();
 
         http.sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

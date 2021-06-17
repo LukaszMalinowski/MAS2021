@@ -14,8 +14,9 @@ import java.util.Date;
 public class JwtUtil {
 
     public static final String EMAIL = "email";
+    public static final String NAME = "name";
     public static final String ROLE = "role";
-    public static final String ID = "ID";
+    public static final String ID = "id";
 
     @Value ("${authentication.jwt.secret}")
     private String secret;
@@ -30,6 +31,7 @@ public class JwtUtil {
                         .withClaim(ID, user.getId())
                         .withClaim(EMAIL, user.getEmail())
                         .withClaim(ROLE, user.getRole().getAuthority())
+                        .withClaim(NAME, user.getFirstName())
                         .withIssuedAt(new Date())
                         .withExpiresAt(expiresDate)
                         .sign(Algorithm.HMAC512(secret));
