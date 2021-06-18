@@ -2,8 +2,8 @@ package pl.lukaszmalina.mas2021.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.lukaszmalina.mas2021.model.Client;
+import pl.lukaszmalina.mas2021.model.Garage;
 
 @Repository
-public interface ClientRepository extends JpaRepository<Client, Long> {
+public interface GarageRepository extends JpaRepository <Garage, Long> {
 }

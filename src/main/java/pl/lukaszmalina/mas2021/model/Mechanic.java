@@ -23,7 +23,7 @@ public class Mechanic {
 
     @ManyToOne (cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
     @NotNull
-    private Company company;
+    private Garage garage;
 
     @OneToMany (mappedBy = "mechanic", cascade = CascadeType.ALL)
     private List<MechanicRepair> repairs;
@@ -69,12 +69,12 @@ public class Mechanic {
         this.hourlyRate = hourlyRate;
     }
 
-    public Company getCompany() {
-        return company;
+    public Garage getGarage() {
+        return garage;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setGarage(Garage garage) {
+        this.garage = garage;
     }
 
     public List<MechanicRepair> getRepairs() {
@@ -98,16 +98,5 @@ public class Mechanic {
     @Override
     public int hashCode() {
         return Objects.hash(name, surname, hourlyRate.doubleValue());
-    }
-
-    @Override
-    public String toString() {
-        return "Mechanic{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", hourlyRate=" + hourlyRate +
-                ", company=" + company +
-                '}';
     }
 }

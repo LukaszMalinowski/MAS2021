@@ -3,7 +3,6 @@ package pl.lukaszmalina.mas2021.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
 public class Repair {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private long id;
 
     private String description;
@@ -19,13 +18,20 @@ public class Repair {
     @DateTimeFormat (pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime receiveDateTime;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @DateTimeFormat (pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime returnDateTime;
 
-    private BigDecimal cost;
-
-    @OneToMany (mappedBy ="repair",cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "repair", cascade = CascadeType.ALL)
     private List<MechanicRepair> mechanics;
+
+    @ManyToOne (cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
+    private Garage garage;
+
+    @ManyToOne (cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
+    private Car car;
+
+    @ManyToMany
+    private List<Part> parts;
 
     public Repair() {
     }
@@ -62,19 +68,35 @@ public class Repair {
         this.returnDateTime = returnDateTime;
     }
 
-    public BigDecimal getCost() {
-        return cost;
-    }
-
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
-    }
-
     public List<MechanicRepair> getMechanics() {
         return mechanics;
     }
 
     public void setMechanics(List<MechanicRepair> mechanics) {
         this.mechanics = mechanics;
+    }
+
+    public Garage getGarage() {
+        return garage;
+    }
+
+    public void setGarage(Garage garage) {
+        this.garage = garage;
+    }
+
+    public List<Part> getParts() {
+        return parts;
+    }
+
+    public void setParts(List<Part> parts) {
+        this.parts = parts;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 }

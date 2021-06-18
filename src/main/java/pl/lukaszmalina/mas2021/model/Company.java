@@ -17,8 +17,8 @@ public class Company {
 
     private String taxNumber;
 
-    @OneToMany(targetEntity = Mechanic.class, cascade = CascadeType.ALL, mappedBy = "company")
-    private Set<Mechanic> mechanics;
+    @OneToMany
+    private Set<User> employees;
 
     public Company() {
     }
@@ -55,11 +55,11 @@ public class Company {
         this.taxNumber = taxNumber;
     }
 
-    public Set<Mechanic> getMechanics() {
-        return mechanics;
+    public Set<User> getEmployees() {
+        return employees;
     }
 
-    public void setMechanics(Set<Mechanic> mechanics) {
-        this.mechanics = mechanics;
+    public void setEmployees(Set<User> employees) {
+        this.employees = employees;
     }
 }

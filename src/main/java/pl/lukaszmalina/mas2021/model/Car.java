@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Car {
@@ -36,6 +37,11 @@ public class Car {
     @JsonBackReference
     @ManyToOne (cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
     private User owner;
+
+    @OneToMany (targetEntity = Repair.class,
+            cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST},
+            mappedBy = "car")
+    private Set<Repair> repairs;
 
     public Car() {
     }
@@ -106,6 +112,14 @@ public class Car {
 
     public BigDecimal getHorsePower() {
         return netEnginePower.multiply(HORSE_POWER_CONVERTER);
+    }
+
+    public Set<Repair> getRepairs() {
+        return repairs;
+    }
+
+    public void setRepairs(Set<Repair> repairs) {
+        this.repairs = repairs;
     }
 
     @Override
