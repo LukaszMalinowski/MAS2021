@@ -1,6 +1,7 @@
 package pl.lukaszmalina.mas2021.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -38,9 +39,11 @@ public class Car {
     @ManyToOne (cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
     private User owner;
 
+    @JsonIgnore
     @OneToMany (targetEntity = Repair.class,
             cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST},
-            mappedBy = "car")
+            mappedBy = "car",
+            fetch = FetchType.LAZY)
     private Set<Repair> repairs;
 
     public Car() {
