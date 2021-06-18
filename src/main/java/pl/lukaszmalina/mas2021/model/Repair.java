@@ -33,6 +33,11 @@ public class Repair {
     @ManyToMany
     private List<Part> parts;
 
+    @Enumerated(value = EnumType.STRING)
+    private Status status;
+
+    private boolean isDoorToDoor;
+
     public Repair() {
     }
 
@@ -98,5 +103,21 @@ public class Repair {
 
     public void setCar(Car car) {
         this.car = car;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public boolean isDoorToDoor() {
+        return isDoorToDoor;
+    }
+
+    public void setDoorToDoor(boolean doorToDoor) {
+        isDoorToDoor = doorToDoor;
     }
 }
