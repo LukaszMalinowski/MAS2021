@@ -16,6 +16,8 @@ public class RepairRequestDto {
 
     private boolean invoiceNeeded;
 
+    private String description;
+
     public RepairRequestDto() {
     }
 
@@ -65,5 +67,13 @@ public class RepairRequestDto {
 
     public void setInvoiceNeeded(boolean invoiceNeeded) {
         this.invoiceNeeded = invoiceNeeded;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

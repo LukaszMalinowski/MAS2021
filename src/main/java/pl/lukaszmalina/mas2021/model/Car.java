@@ -41,9 +41,9 @@ public class Car {
 
     @JsonIgnore
     @OneToMany (targetEntity = Repair.class,
-            cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST},
+            cascade = CascadeType.ALL,
             mappedBy = "car",
-            fetch = FetchType.LAZY)
+            fetch = FetchType.EAGER)
     private Set<Repair> repairs;
 
     public Car() {
@@ -130,11 +130,11 @@ public class Car {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car)o;
-        return Objects.equals(vinNumber, car.vinNumber);
+        return Objects.equals(id, car.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(vinNumber);
+        return Objects.hash(id);
     }
 }

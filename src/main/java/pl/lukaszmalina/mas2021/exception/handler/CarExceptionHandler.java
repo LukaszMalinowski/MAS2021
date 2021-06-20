@@ -4,14 +4,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import pl.lukaszmalina.mas2021.exception.ClientNotFoundException;
+import pl.lukaszmalina.mas2021.exception.CarNotFoundException;
 
 @ControllerAdvice
-public class ClientExceptionHandler {
+public class CarExceptionHandler {
 
-    @ExceptionHandler (value = ClientNotFoundException.class)
-    public ResponseEntity<Object> handleClientExceptionHandler(ClientNotFoundException exception) {
+    @ExceptionHandler (value = CarNotFoundException.class)
+    public ResponseEntity<String> handleCarNotFoundException(CarNotFoundException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
-
 }

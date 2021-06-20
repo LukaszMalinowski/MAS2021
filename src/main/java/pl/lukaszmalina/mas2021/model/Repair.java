@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Repair {
@@ -27,8 +28,7 @@ public class Repair {
     @ManyToOne (cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
     private Garage garage;
 
-    @ManyToOne (cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST},
-            fetch = FetchType.LAZY)
+    @ManyToOne
     private Car car;
 
     @ManyToMany
@@ -42,6 +42,27 @@ public class Repair {
     private boolean invoiceNeeded;
 
     public Repair() {
+    }
+
+    public Repair(String description, LocalDateTime receiveDateTime, Garage garage, Car car, boolean isDoorToDoor,
+                  boolean invoiceNeeded, Status status) {
+        this.description = description;
+        this.receiveDateTime = receiveDateTime;
+        this.garage = garage;
+        this.car = car;
+        this.isDoorToDoor = isDoorToDoor;
+        this.invoiceNeeded = invoiceNeeded;
+        this.status = status;
+    }
+
+    public Repair(String description, LocalDateTime receiveDateTime, Garage garage, boolean isDoorToDoor,
+                  boolean invoiceNeeded, Status status) {
+        this.description = description;
+        this.receiveDateTime = receiveDateTime;
+        this.garage = garage;
+        this.isDoorToDoor = isDoorToDoor;
+        this.invoiceNeeded = invoiceNeeded;
+        this.status = status;
     }
 
     public long getId() {
@@ -130,5 +151,18 @@ public class Repair {
 
     public void setInvoiceNeeded(boolean invoiceNeeded) {
         this.invoiceNeeded = invoiceNeeded;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Repair repair = (Repair)o;
+        return id == repair.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

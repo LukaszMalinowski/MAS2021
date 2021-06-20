@@ -2,9 +2,11 @@ package pl.lukaszmalina.mas2021.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import pl.lukaszmalina.mas2021.dto.MechanicRepairDto;
 import pl.lukaszmalina.mas2021.dto.RepairRequestDto;
+import pl.lukaszmalina.mas2021.model.User;
 import pl.lukaszmalina.mas2021.service.RepairService;
 
 import java.util.List;
@@ -24,10 +26,11 @@ public class RepairController {
         return ResponseEntity.ok(repairService.getAllMechanics(repairId));
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize ("hasRole('USER')")
     @PostMapping
-    public ResponseEntity<Void> registerVisit(@RequestBody RepairRequestDto repairRequest) {
-        repairService.registerVisit(repairRequest);
+    public ResponseEntity<Void> registerVisit(@RequestBody RepairRequestDto repairRequest,
+                                              Authentication authentication) {
+        repairService.registerVisit(repairRequest, (User)authentication.getPrincipal());
 
         return ResponseEntity.noContent().build();
     }
