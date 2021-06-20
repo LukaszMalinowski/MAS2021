@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.lukaszmalina.mas2021.model.Garage;
 
 @Repository
-public interface GarageRepository extends JpaRepository <Garage, Long> {
+public interface GarageRepository extends JpaRepository<Garage, Long> {
 }

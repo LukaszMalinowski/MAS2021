@@ -42,7 +42,7 @@ public class AuthenticationController {
                     userCredentials.getEmail(), userCredentials.getPassword()
             ));
 
-            User user = (User) authenticate.getPrincipal();
+            User user = (User)authenticate.getPrincipal();
             return ResponseEntity.ok(jwtUtil.createToken(user));
         }
         catch (BadCredentialsException exception) {

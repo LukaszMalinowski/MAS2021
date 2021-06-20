@@ -10,12 +10,12 @@ import pl.lukaszmalina.mas2021.exception.MechanicAlreadyExistsException;
 @ControllerAdvice
 public class CompanyExceptionHandler {
 
-    @ExceptionHandler(value = CompanyNotFoundException.class)
+    @ExceptionHandler (value = CompanyNotFoundException.class)
     public ResponseEntity<Object> handleCompanyNotFoundException(CompanyNotFoundException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(value = MechanicAlreadyExistsException.class)
+    @ExceptionHandler (value = MechanicAlreadyExistsException.class)
     public ResponseEntity<Object> handleMechanicAlreadyExistsException(MechanicAlreadyExistsException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }

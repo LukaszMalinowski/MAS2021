@@ -1,8 +1,6 @@
 package pl.lukaszmalina.mas2021.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,13 +20,13 @@ public class Garage {
     private Set<LocalDateTime> availableDates;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne (fetch = FetchType.LAZY)
     private User owner;
 
     @OneToOne
     private Address address;
 
-    @OneToMany(targetEntity = Mechanic.class, cascade = CascadeType.ALL, mappedBy = "garage")
+    @OneToMany (targetEntity = Mechanic.class, cascade = CascadeType.ALL, mappedBy = "garage")
     private Set<Mechanic> mechanics;
 
     public Garage() {
