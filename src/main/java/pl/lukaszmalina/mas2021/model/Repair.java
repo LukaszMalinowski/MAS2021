@@ -34,7 +34,7 @@ public class Repair {
     @ManyToMany
     private List<Part> parts;
 
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated (value = EnumType.STRING)
     private Status status;
 
     private boolean isDoorToDoor;
