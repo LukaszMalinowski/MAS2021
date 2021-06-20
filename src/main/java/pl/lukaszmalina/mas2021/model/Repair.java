@@ -39,6 +39,8 @@ public class Repair {
 
     private boolean isDoorToDoor;
 
+    private boolean invoiceNeeded;
+
     public Repair() {
     }
 
@@ -120,5 +122,13 @@ public class Repair {
 
     public void setDoorToDoor(boolean doorToDoor) {
         isDoorToDoor = doorToDoor;
+    }
+
+    public boolean isInvoiceNeeded() {
+        return invoiceNeeded;
+    }
+
+    public void setInvoiceNeeded(boolean invoiceNeeded) {
+        this.invoiceNeeded = invoiceNeeded;
     }
 }

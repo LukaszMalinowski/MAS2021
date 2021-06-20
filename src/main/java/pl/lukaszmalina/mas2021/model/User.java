@@ -49,7 +49,9 @@ public class User implements UserDetails {
     @ManyToOne (cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Role role;
 
-    @OneToOne (cascade = CascadeType.ALL, mappedBy = "owner")
+    @OneToOne (cascade = CascadeType.ALL,
+            mappedBy = "owner",
+            fetch = FetchType.LAZY)
     private Garage garage;
 
     @ManyToOne (cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

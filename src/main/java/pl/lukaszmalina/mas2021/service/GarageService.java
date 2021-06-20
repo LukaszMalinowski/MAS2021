@@ -6,6 +6,7 @@ import pl.lukaszmalina.mas2021.model.Garage;
 import pl.lukaszmalina.mas2021.repository.GarageRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,10 @@ public class GarageService {
 
     public GarageService(GarageRepository garageRepository) {
         this.garageRepository = garageRepository;
+    }
+
+    public List<Garage> getAllGarages() {
+        return garageRepository.findAll();
     }
 
     public Set<LocalDateTime> getAllAvailableDates(long garageId) {

@@ -2,9 +2,12 @@ package pl.lukaszmalina.mas2021.service;
 
 import org.springframework.stereotype.Service;
 import pl.lukaszmalina.mas2021.dto.MechanicRepairDto;
+import pl.lukaszmalina.mas2021.dto.RepairRequestDto;
 import pl.lukaszmalina.mas2021.exception.RepairNotFoundException;
 import pl.lukaszmalina.mas2021.model.Repair;
+import pl.lukaszmalina.mas2021.repository.GarageRepository;
 import pl.lukaszmalina.mas2021.repository.RepairRepository;
+import pl.lukaszmalina.mas2021.repository.UserRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,9 +16,19 @@ import java.util.stream.Collectors;
 public class RepairService {
 
     private final RepairRepository repairRepository;
+    private final UserRepository userRepository;
+    private final GarageRepository garageRepository;
 
-    public RepairService(RepairRepository repairRepository) {
+    public RepairService(RepairRepository repairRepository,
+                         UserRepository userRepository,
+                         GarageRepository garageRepository) {
         this.repairRepository = repairRepository;
+        this.userRepository = userRepository;
+        this.garageRepository = garageRepository;
+    }
+
+    public void registerVisit(RepairRequestDto repairRequest) {
+
     }
 
     public List<MechanicRepairDto> getAllMechanics(long repairId) {

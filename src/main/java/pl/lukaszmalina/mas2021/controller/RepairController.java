@@ -1,27 +1,34 @@
 package pl.lukaszmalina.mas2021.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import pl.lukaszmalina.mas2021.dto.MechanicRepairDto;
+import pl.lukaszmalina.mas2021.dto.RepairRequestDto;
 import pl.lukaszmalina.mas2021.service.RepairService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/repairs")
+@RequestMapping ("/api/repairs")
 public class RepairController {
 
-    private final RepairService service;
+    private final RepairService repairService;
 
-    public RepairController(RepairService service) {
-        this.service = service;
+    public RepairController(RepairService repairService) {
+        this.repairService = repairService;
     }
 
-    @GetMapping("/{repairId}/mechanics")
+    @GetMapping ("/{repairId}/mechanics")
     public ResponseEntity<List<MechanicRepairDto>> getAllMechanics(@PathVariable long repairId) {
-        return ResponseEntity.ok(service.getAllMechanics(repairId));
+        return ResponseEntity.ok(repairService.getAllMechanics(repairId));
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping
+    public ResponseEntity<Void> registerVisit(@RequestBody RepairRequestDto repairRequest) {
+        repairService.registerVisit(repairRequest);
+
+        return ResponseEntity.noContent().build();
     }
 }

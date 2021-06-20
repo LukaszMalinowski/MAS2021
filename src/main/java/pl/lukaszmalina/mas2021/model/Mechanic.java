@@ -1,5 +1,6 @@
 package pl.lukaszmalina.mas2021.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import pl.lukaszmalina.mas2021.dto.MechanicDto;
 
 import javax.persistence.*;
@@ -21,10 +22,13 @@ public class Mechanic {
 
     private BigDecimal hourlyRate;
 
-    @ManyToOne (cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST})
+    @JsonIgnore
+    @ManyToOne (cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST},
+            fetch = FetchType.LAZY)
     @NotNull
     private Garage garage;
 
+    @JsonIgnore
     @OneToMany (mappedBy = "mechanic", cascade = CascadeType.ALL)
     private List<MechanicRepair> repairs;
 
