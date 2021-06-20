@@ -20,15 +20,22 @@ public class GarageService {
     }
 
     public List<Garage> getAllGarages() {
-        return garageRepository.findAll();
+        List<Garage> garages = garageRepository.findAll();
+
+        garages.forEach(garage -> garage
+                .setAvailableDates(garage.getAvailableDates()
+                                         .stream()
+                                         .filter(localDateTime -> localDateTime.isAfter(LocalDateTime.now()))
+                                         .collect(Collectors.toSet())));
+
+        return garages;
     }
 
     public Set<LocalDateTime> getAllAvailableDates(long garageId) {
         Garage garage = garageRepository.findById(garageId).orElseThrow(() -> new GarageNotFoundException(garageId));
 
-        LocalDateTime now = LocalDateTime.now();
         return garage.getAvailableDates().stream()
-                     .filter(localDateTime -> localDateTime.isAfter(now))
+                     .filter(localDateTime -> localDateTime.isAfter(LocalDateTime.now()))
                      .collect(Collectors.toSet());
     }
 }
