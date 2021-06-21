@@ -48,7 +48,7 @@ public class RepairService {
                 repairCar,
                 repairRequest.isDoorToDoor(),
                 repairRequest.isInvoiceNeeded(),
-                Status.STARTED
+                Status.REGISTERED
         );
 
         repairRepository.save(repair);
