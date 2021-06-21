@@ -17,6 +17,7 @@ public class JwtUtil {
     public static final String NAME = "name";
     public static final String ROLE = "role";
     public static final String ID = "id";
+    public static final String GARAGE_ID = "garageId";
 
     @Value ("${authentication.jwt.secret}")
     private String secret;
@@ -29,6 +30,7 @@ public class JwtUtil {
 
         String jwt = JWT.create()
                         .withClaim(ID, user.getId())
+                        .withClaim(GARAGE_ID, user.getGarage().getId())
                         .withClaim(EMAIL, user.getEmail())
                         .withClaim(ROLE, user.getRole().getAuthority())
                         .withClaim(NAME, user.getFirstName())

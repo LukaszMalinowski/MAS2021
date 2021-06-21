@@ -30,7 +30,15 @@ public class RepairController {
     @PostMapping
     public ResponseEntity<Void> registerVisit(@RequestBody RepairRequestDto repairRequest,
                                               Authentication authentication) {
-        repairService.registerVisit(repairRequest, (User)authentication.getPrincipal());
+        repairService.registerRepair(repairRequest, (User)authentication.getPrincipal());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize ("hasRole('OWNER')")
+    @PostMapping ("/{repairId}")
+    public ResponseEntity<Void> completeVisit(@PathVariable long repairId, Authentication authentication) {
+        repairService.completeRepair(repairId, (User)authentication.getPrincipal());
 
         return ResponseEntity.noContent().build();
     }

@@ -26,7 +26,7 @@ public class RepairService {
     }
 
     @Transactional
-    public void registerVisit(RepairRequestDto repairRequest, User user) {
+    public void registerRepair(RepairRequestDto repairRequest, User user) {
         if (repairRequest.getClientId() != user.getId()) {
             throw new UserNotPermittedException("You cannot register visit for another user");
         }
@@ -51,6 +51,19 @@ public class RepairService {
                 Status.REGISTERED
         );
 
+        repairRepository.save(repair);
+    }
+
+    //TODO sending mail
+    @Transactional
+    public void completeRepair(long repairId, User user) {
+        Repair repair = repairRepository.findById(repairId).orElseThrow(() -> new RepairNotFoundException(repairId));
+
+        if (repair.getGarage().getOwner().getId() != user.getId()) {
+            throw new UserNotPermittedException("You can complete repairs from your services only");
+        }
+
+        repair.setStatus(Status.COMPLETED);
         repairRepository.save(repair);
     }
 
