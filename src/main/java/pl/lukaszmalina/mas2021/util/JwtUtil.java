@@ -4,11 +4,13 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import pl.lukaszmalina.mas2021.model.Garage;
 import pl.lukaszmalina.mas2021.model.TokenResponse;
 import pl.lukaszmalina.mas2021.model.User;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 
 @Component
 public class JwtUtil {
@@ -30,7 +32,7 @@ public class JwtUtil {
 
         String jwt = JWT.create()
                         .withClaim(ID, user.getId())
-                        .withClaim(GARAGE_ID, user.getGarage().getId())
+                        .withClaim(GARAGE_ID, user.getGarage() == null ? -1L : user.getGarage().getId())
                         .withClaim(EMAIL, user.getEmail())
                         .withClaim(ROLE, user.getRole().getAuthority())
                         .withClaim(NAME, user.getFirstName())
