@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,8 +31,13 @@ public class Garage {
     @OneToMany (targetEntity = Mechanic.class, cascade = CascadeType.ALL, mappedBy = "garage")
     private Set<Mechanic> mechanics;
 
+    @JsonIgnore
+    @OneToMany (targetEntity = Repair.class, cascade = CascadeType.ALL, mappedBy = "garage")
+    private List<Repair> repairs;
+
     public Garage() {
         availableDates = new HashSet<>();
+        repairs = new ArrayList<>();
     }
 
     public long getId() {
@@ -79,5 +86,13 @@ public class Garage {
 
     public void setMechanics(Set<Mechanic> mechanics) {
         this.mechanics = mechanics;
+    }
+
+    public List<Repair> getRepairs() {
+        return repairs;
+    }
+
+    public void setRepairs(List<Repair> repairs) {
+        this.repairs = repairs;
     }
 }

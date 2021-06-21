@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 public class MechanicRepairDto {
 
-    private long id;
+    private long mechanicId;
 
     private String name;
 
@@ -19,7 +19,7 @@ public class MechanicRepairDto {
     private int hours;
 
     public MechanicRepairDto(Mechanic mechanic, String notes, int hours) {
-        this.id = mechanic.getId();
+        this.mechanicId = mechanic.getId();
         this.name = mechanic.getName();
         this.surname = mechanic.getSurname();
         this.hourlyRate = mechanic.getHourlyRate();
@@ -27,12 +27,12 @@ public class MechanicRepairDto {
         this.hours = hours;
     }
 
-    public long getId() {
-        return id;
+    public long getMechanicId() {
+        return mechanicId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setMechanicId(long mechanicId) {
+        this.mechanicId = mechanicId;
     }
 
     public String getName() {

@@ -1,6 +1,8 @@
 package pl.lukaszmalina.mas2021.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import pl.lukaszmalina.mas2021.model.Address;
+import pl.lukaszmalina.mas2021.model.User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -8,6 +10,7 @@ import javax.validation.constraints.Size;
 
 public class UserDto {
 
+    @JsonIgnore
     @Size (min = 8, max = 128)
     @NotBlank (message = "Password is mandatory")
     private String password;
@@ -27,6 +30,14 @@ public class UserDto {
     private String phoneNumber;
 
     public UserDto() {
+    }
+
+    public UserDto(User user) {
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.phoneNumber = user.getPhoneNumber();
+        this.address = user.getAddress();
     }
 
     public String getPassword() {

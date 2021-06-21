@@ -8,6 +8,7 @@ import pl.lukaszmalina.mas2021.model.*;
 import pl.lukaszmalina.mas2021.repository.GarageRepository;
 import pl.lukaszmalina.mas2021.repository.RepairRepository;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ public class RepairService {
         this.garageRepository = garageRepository;
     }
 
+    @Transactional
     public void registerVisit(RepairRequestDto repairRequest, User user) {
         if (repairRequest.getClientId() != user.getId()) {
             throw new UserNotPermittedException("You cannot register visit for another user");
