@@ -58,7 +58,6 @@ public class RepairService {
         repairRepository.save(repair);
     }
 
-    //TODO sending mail
     @Transactional
     public void completeRepair(long repairId, User user) {
         Repair repair = repairRepository.findById(repairId).orElseThrow(() -> new RepairNotFoundException(repairId));
@@ -124,11 +123,15 @@ public class RepairService {
                 " repair!" +
                 "\r\n\r\n" +
                 "Total mechanics cost: " +
-                mechanicsTotal[0].toString() +
+                mechanicsTotal[0] +
                 "zł." +
                 "\r\n" +
                 "Total parts cost: " +
-                partsTotal[0].toString() +
+                partsTotal[0] +
+                "zł." +
+                "\r\n" +
+                "Total cost: " +
+                partsTotal[0].add(mechanicsTotal[0]) +
                 "zł." +
                 "\r\n" +
                 "You can receive your car now!";
