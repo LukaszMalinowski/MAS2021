@@ -2,16 +2,22 @@ package pl.lukaszmalina.mas2021.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.lukaszmalina.mas2021.dto.CarDto;
+import pl.lukaszmalina.mas2021.dto.RepairDto;
 import pl.lukaszmalina.mas2021.dto.UserDto;
 import pl.lukaszmalina.mas2021.exception.UserNotPermittedException;
 import pl.lukaszmalina.mas2021.model.Car;
+import pl.lukaszmalina.mas2021.model.Repair;
 import pl.lukaszmalina.mas2021.model.Role;
 import pl.lukaszmalina.mas2021.model.User;
+import pl.lukaszmalina.mas2021.repository.RepairRepository;
 import pl.lukaszmalina.mas2021.repository.RoleRepository;
 import pl.lukaszmalina.mas2021.repository.UserRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -19,12 +25,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final RepairRepository repairRepository;
 
     public UserService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+                       PasswordEncoder passwordEncoder,
+                       RoleRepository roleRepository,
+                       RepairRepository repairRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
+        this.repairRepository = repairRepository;
     }
 
     public boolean userExists(String email) {
@@ -67,5 +77,26 @@ public class UserService {
         }
 
         return user.getCars();
+    }
+
+    public List<RepairDto> getAllRepairs(long userId, User user) {
+        if (userId != user.getId()) {
+            throw new UserNotPermittedException("You cannot get others users repairs");
+        }
+
+        List<Repair> repairs = repairRepository.findAllByCarOwnerId(userId);
+
+        return repairs.stream()
+                      .map(repair -> new RepairDto(
+                              repair.getId(),
+                              repair.getDescription(),
+                              repair.getReceiveDateTime(),
+                              repair.getMechanics(),
+                              new CarDto(repair.getCar()),
+                              repair.getParts(),
+                              repair.getStatus(),
+                              repair.isDoorToDoor(),
+                              repair.isInvoiceNeeded()
+                      )).collect(Collectors.toList());
     }
 }

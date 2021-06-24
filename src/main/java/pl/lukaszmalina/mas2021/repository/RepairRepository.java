@@ -11,4 +11,6 @@ public interface RepairRepository extends JpaRepository<Repair, Long> {
 
     List<Repair> findAllByGarageId(long garageId);
 
+    List<Repair> findAllByCarOwnerId(long ownerId);
+
 }
