@@ -1,6 +1,5 @@
 package pl.lukaszmalina.mas2021.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import pl.lukaszmalina.mas2021.model.Address;
 import pl.lukaszmalina.mas2021.model.User;
 
@@ -10,7 +9,6 @@ import javax.validation.constraints.Size;
 
 public class UserDto {
 
-    @JsonIgnore
     @Size (min = 8, max = 128)
     @NotBlank (message = "Password is mandatory")
     private String password;
