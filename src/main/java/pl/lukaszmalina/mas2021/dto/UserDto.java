@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 
 public class UserDto {
 
-    @Size (min = 8, max = 128)
+    @Size (min = 8, max = 128, message = "Password must be at least 8 characters long")
     @NotBlank (message = "Password is mandatory")
     private String password;
 
@@ -19,8 +19,8 @@ public class UserDto {
     @NotBlank (message = "Last name is mandatory")
     private String lastName;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email is mandatory")
+    @Email (message = "Email not valid")
     private String email;
 
     private Address address;
