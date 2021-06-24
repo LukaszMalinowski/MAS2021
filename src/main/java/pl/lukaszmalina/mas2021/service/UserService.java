@@ -15,6 +15,7 @@ import pl.lukaszmalina.mas2021.repository.RoleRepository;
 import pl.lukaszmalina.mas2021.repository.UserRepository;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -97,6 +98,9 @@ public class UserService {
                               repair.getStatus(),
                               repair.isDoorToDoor(),
                               repair.isInvoiceNeeded()
-                      )).collect(Collectors.toList());
+                      ))
+                      .sorted(Comparator.comparing(RepairDto::getStatus)
+                                        .thenComparing(RepairDto::getReceiveDateTime))
+                      .collect(Collectors.toList());
     }
 }
