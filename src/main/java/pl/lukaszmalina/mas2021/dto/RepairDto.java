@@ -30,6 +30,8 @@ public class RepairDto {
 
     private boolean invoiceNeeded;
 
+    //TODO add garage dto
+
     public RepairDto() {
     }
 

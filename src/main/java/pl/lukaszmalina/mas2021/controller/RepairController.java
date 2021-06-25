@@ -28,7 +28,7 @@ public class RepairController {
 
     @PreAuthorize ("hasRole('USER')")
     @PostMapping
-    public ResponseEntity<Void> registerVisit(@RequestBody RepairRequestDto repairRequest,
+    public ResponseEntity<Void> registerRepair(@RequestBody RepairRequestDto repairRequest,
                                               Authentication authentication) {
         repairService.registerRepair(repairRequest, (User)authentication.getPrincipal());
 
@@ -37,8 +37,15 @@ public class RepairController {
 
     @PreAuthorize ("hasRole('OWNER')")
     @PostMapping ("/{repairId}")
-    public ResponseEntity<Void> completeVisit(@PathVariable long repairId, Authentication authentication) {
+    public ResponseEntity<Void> completeRepair(@PathVariable long repairId, Authentication authentication) {
         repairService.completeRepair(repairId, (User)authentication.getPrincipal());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize ("hasRole('OWNER')")
+    @PutMapping ("/{repairId}")
+    public ResponseEntity<Void> updateRepair(@PathVariable long repairId, Authentication authentication) {
 
         return ResponseEntity.noContent().build();
     }

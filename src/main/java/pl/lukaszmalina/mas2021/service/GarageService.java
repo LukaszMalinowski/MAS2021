@@ -5,10 +5,7 @@ import pl.lukaszmalina.mas2021.dto.CarDto;
 import pl.lukaszmalina.mas2021.dto.RepairDto;
 import pl.lukaszmalina.mas2021.exception.GarageNotFoundException;
 import pl.lukaszmalina.mas2021.exception.UserNotPermittedException;
-import pl.lukaszmalina.mas2021.model.Garage;
-import pl.lukaszmalina.mas2021.model.Repair;
-import pl.lukaszmalina.mas2021.model.Status;
-import pl.lukaszmalina.mas2021.model.User;
+import pl.lukaszmalina.mas2021.model.*;
 import pl.lukaszmalina.mas2021.repository.GarageRepository;
 import pl.lukaszmalina.mas2021.repository.RepairRepository;
 
@@ -70,5 +67,15 @@ public class GarageService {
                                                    repair.isDoorToDoor(),
                                                    repair.isInvoiceNeeded()))
                       .collect(Collectors.toList());
+    }
+
+    public Set<Mechanic> getAllMechanics(long garageId, User owner) {
+        Garage garage = garageRepository.findById(garageId).orElseThrow(() -> new GarageNotFoundException(garageId));
+
+        if (garage.getOwner().getId() != owner.getId()) {
+            throw new UserNotPermittedException("You can only view mechanics in your garage");
+        }
+
+        return garage.getMechanics();
     }
 }

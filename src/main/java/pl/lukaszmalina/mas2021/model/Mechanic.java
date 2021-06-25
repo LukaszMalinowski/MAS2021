@@ -1,7 +1,6 @@
 package pl.lukaszmalina.mas2021.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import pl.lukaszmalina.mas2021.dto.MechanicDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -33,12 +32,6 @@ public class Mechanic {
     private List<MechanicRepair> repairs;
 
     public Mechanic() {
-    }
-
-    public Mechanic(MechanicDto mechanicDto) {
-        this.name = mechanicDto.getName();
-        this.surname = mechanicDto.getSurname();
-        this.hourlyRate = mechanicDto.getHourlyRate();
     }
 
     public long getId() {

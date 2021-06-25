@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.lukaszmalina.mas2021.dto.RepairDto;
 import pl.lukaszmalina.mas2021.model.Garage;
+import pl.lukaszmalina.mas2021.model.Mechanic;
 import pl.lukaszmalina.mas2021.model.User;
 import pl.lukaszmalina.mas2021.service.GarageService;
 
@@ -42,4 +43,12 @@ public class GarageController {
                                                                 Authentication authentication) {
         return ResponseEntity.ok(garageService.getAllOngoingRepairs(garageId, (User)authentication.getPrincipal()));
     }
+
+    @PreAuthorize ("hasRole('OWNER')")
+    @GetMapping ("/{garageId}/mechanics")
+    public ResponseEntity<Set<Mechanic>> getAllMechanics(@PathVariable long garageId,
+                                                         Authentication authentication) {
+        return ResponseEntity.ok(garageService.getAllMechanics(garageId, (User)authentication.getPrincipal()));
+    }
+
 }
