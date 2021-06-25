@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import pl.lukaszmalina.mas2021.dto.MechanicRepairDto;
 import pl.lukaszmalina.mas2021.dto.RepairRequestDto;
+import pl.lukaszmalina.mas2021.model.Part;
 import pl.lukaszmalina.mas2021.model.User;
 import pl.lukaszmalina.mas2021.service.RepairService;
 
@@ -49,6 +50,16 @@ public class RepairController {
                                             @RequestBody MechanicRepairDto mechanicRepairDto,
                                             Authentication authentication) {
         repairService.addMechanic(repairId, mechanicRepairDto, (User)authentication.getPrincipal());
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize ("hasRole('OWNER')")
+    @PostMapping ("/{repairId}/parts")
+    public ResponseEntity<Void> addPart(@PathVariable long repairId,
+                                        @RequestBody Part part,
+                                        Authentication authentication) {
+        repairService.addPart(repairId, part, (User)authentication.getPrincipal());
 
         return ResponseEntity.noContent().build();
     }
