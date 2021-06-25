@@ -18,6 +18,9 @@ public class MechanicRepairDto {
 
     private int hours;
 
+    public MechanicRepairDto() {
+    }
+
     public MechanicRepairDto(Mechanic mechanic, String notes, int hours) {
         this.mechanicId = mechanic.getId();
         this.name = mechanic.getName();

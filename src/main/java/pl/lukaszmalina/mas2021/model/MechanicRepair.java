@@ -1,5 +1,7 @@
 package pl.lukaszmalina.mas2021.model;
 
+import pl.lukaszmalina.mas2021.dto.MechanicRepairDto;
+
 import javax.persistence.*;
 
 @Entity
@@ -22,6 +24,13 @@ public class MechanicRepair {
     private int hours;
 
     public MechanicRepair() {
+    }
+
+    public MechanicRepair(Mechanic mechanic, Repair repair, String notes, int hours) {
+        this.mechanic = mechanic;
+        this.repair = repair;
+        this.notes = notes;
+        this.hours = hours;
     }
 
     public long getId() {

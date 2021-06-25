@@ -6,6 +6,7 @@ import pl.lukaszmalina.mas2021.dto.RepairRequestDto;
 import pl.lukaszmalina.mas2021.exception.*;
 import pl.lukaszmalina.mas2021.model.*;
 import pl.lukaszmalina.mas2021.repository.GarageRepository;
+import pl.lukaszmalina.mas2021.repository.MechanicRepository;
 import pl.lukaszmalina.mas2021.repository.RepairRepository;
 import pl.lukaszmalina.mas2021.util.EmailSender;
 
@@ -20,12 +21,16 @@ public class RepairService {
 
     private final RepairRepository repairRepository;
     private final GarageRepository garageRepository;
+    private final MechanicRepository mechanicRepository;
     private final EmailSender emailSender;
 
     public RepairService(RepairRepository repairRepository,
-                         GarageRepository garageRepository, EmailSender emailSender) {
+                         GarageRepository garageRepository,
+                         MechanicRepository mechanicRepository,
+                         EmailSender emailSender) {
         this.repairRepository = repairRepository;
         this.garageRepository = garageRepository;
+        this.mechanicRepository = mechanicRepository;
         this.emailSender = emailSender;
     }
 
@@ -93,7 +98,29 @@ public class RepairService {
                      .collect(Collectors.toList());
     }
 
-    public void sendRepairCompletionEmail(Repair repair) {
+    @Transactional
+    public void addMechanic(long repairId, MechanicRepairDto mechanicRepairDto, User user) {
+        Repair repair = repairRepository.findById(repairId).orElseThrow(() -> new RepairNotFoundException(repairId));
+
+        if (repair.getGarage().getOwner().getId() != user.getId()) {
+            throw new UserNotPermittedException("You can complete repairs from your services only");
+        }
+
+        Mechanic mechanic = mechanicRepository.findById(mechanicRepairDto.getMechanicId())
+                                              .orElseThrow(() -> new MechanicNotFoundException(
+                                                      mechanicRepairDto.getMechanicId()));
+
+        repair.getMechanics()
+              .add(new MechanicRepair(mechanic, repair, mechanicRepairDto.getNotes(), mechanicRepairDto.getHours()));
+
+        if (repair.getStatus() == Status.REGISTERED) {
+            repair.setStatus(Status.STARTED);
+        }
+
+        repairRepository.save(repair);
+    }
+
+    private void sendRepairCompletionEmail(Repair repair) {
         Car userCar = repair.getCar();
         String toEmail = userCar.getOwner().getEmail();
 
