@@ -8,12 +8,11 @@ import pl.lukaszmalina.mas2021.exception.GarageNotFoundException;
 import pl.lukaszmalina.mas2021.exception.UserNotPermittedException;
 import pl.lukaszmalina.mas2021.model.*;
 import pl.lukaszmalina.mas2021.repository.GarageRepository;
-import pl.lukaszmalina.mas2021.repository.RepairRepository;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class GarageService {
@@ -31,7 +30,8 @@ public class GarageService {
                 .setAvailableDates(garage.getAvailableDates()
                                          .stream()
                                          .filter(localDateTime -> localDateTime.isAfter(LocalDateTime.now()))
-                                         .collect(Collectors.toSet())));
+                                         .sorted()
+                                         .collect(Collectors.toCollection(LinkedHashSet::new))));
 
         return garages;
     }
@@ -41,7 +41,8 @@ public class GarageService {
 
         return garage.getAvailableDates().stream()
                      .filter(localDateTime -> localDateTime.isAfter(LocalDateTime.now()))
-                     .collect(Collectors.toSet());
+                     .sorted()
+                     .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     public List<RepairDto> getAllOngoingRepairs(long garageId, User owner) {
