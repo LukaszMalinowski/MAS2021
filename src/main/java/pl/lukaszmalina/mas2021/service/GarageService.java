@@ -3,6 +3,7 @@ package pl.lukaszmalina.mas2021.service;
 import org.springframework.stereotype.Service;
 import pl.lukaszmalina.mas2021.dto.CarDto;
 import pl.lukaszmalina.mas2021.dto.RepairDto;
+import pl.lukaszmalina.mas2021.exception.DateIsInPastException;
 import pl.lukaszmalina.mas2021.exception.GarageNotFoundException;
 import pl.lukaszmalina.mas2021.exception.UserNotPermittedException;
 import pl.lukaszmalina.mas2021.model.*;
@@ -18,12 +19,9 @@ import java.util.stream.Collectors;
 public class GarageService {
 
     private final GarageRepository garageRepository;
-    private final RepairRepository repairRepository;
 
-    public GarageService(GarageRepository garageRepository,
-                         RepairRepository repairRepository) {
+    public GarageService(GarageRepository garageRepository) {
         this.garageRepository = garageRepository;
-        this.repairRepository = repairRepository;
     }
 
     public List<Garage> getAllGarages() {
@@ -77,5 +75,21 @@ public class GarageService {
         }
 
         return garage.getMechanics();
+    }
+
+    public void addDate(long garageId, User owner, LocalDateTime dateTime) {
+        Garage garage = garageRepository.findById(garageId).orElseThrow(() -> new GarageNotFoundException(garageId));
+
+        if (garage.getOwner().getId() != owner.getId()) {
+            throw new UserNotPermittedException("You can only add date to your garage");
+        }
+
+        if (dateTime.isBefore(LocalDateTime.now())) {
+            throw new DateIsInPastException();
+        }
+
+        garage.getAvailableDates().add(dateTime);
+
+        garageRepository.save(garage);
     }
 }
