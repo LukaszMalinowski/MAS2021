@@ -10,9 +10,9 @@
     </parent>
     <groupId>pl.lukaszmalina</groupId>
     <artifactId>MAS2021</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>MAS2021</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Api for managing car services</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>

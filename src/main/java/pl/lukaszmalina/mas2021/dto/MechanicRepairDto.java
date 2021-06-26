@@ -2,6 +2,7 @@ package pl.lukaszmalina.mas2021.dto;
 
 import pl.lukaszmalina.mas2021.model.Mechanic;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class MechanicRepairDto {
@@ -16,6 +17,7 @@ public class MechanicRepairDto {
 
     private String notes;
 
+    @NotNull
     private int hours;
 
     public MechanicRepairDto() {
