@@ -25,7 +25,7 @@ public class Car {
 
     @NotNull
     @NotBlank
-    private String mark;
+    private String brand;
 
     @NotNull
     @NotBlank
@@ -81,12 +81,12 @@ public class Car {
         this.productionYear = productionYear;
     }
 
-    public String getMark() {
-        return mark;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setMark(String mark) {
-        this.mark = mark;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getModel() {

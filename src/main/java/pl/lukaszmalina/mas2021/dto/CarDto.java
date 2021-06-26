@@ -14,7 +14,7 @@ public class CarDto {
 
     private int productionYear;
 
-    private String mark;
+    private String brand;
 
     private String model;
 
@@ -26,7 +26,7 @@ public class CarDto {
         this.carId = car.getId();
         this.registrationNumber = car.getRegistrationNumber();
         this.vinNumber = car.getVinNumber();
-        this.mark = car.getMark();
+        this.brand = car.getBrand();
         this.model = car.getModel();
         this.netEnginePower = car.getNetEnginePower();
 
@@ -67,12 +67,12 @@ public class CarDto {
         this.productionYear = productionYear;
     }
 
-    public String getMark() {
-        return mark;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setMark(String mark) {
-        this.mark = mark;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getModel() {

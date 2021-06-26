@@ -167,7 +167,7 @@ public class RepairService {
                 userCar.getOwner().getFirstName() +
                 "\r\n" +
                 "We completed your " +
-                userCar.getMark() +
+                userCar.getBrand() +
                 " " +
                 userCar.getModel() +
                 " repair!" +
