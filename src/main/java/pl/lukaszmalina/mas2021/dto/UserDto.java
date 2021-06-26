@@ -19,7 +19,7 @@ public class UserDto {
     @NotBlank (message = "Last name is mandatory")
     private String lastName;
 
-    @NotBlank(message = "Email is mandatory")
+    @NotBlank (message = "Email is mandatory")
     @Email (message = "Email not valid")
     private String email;
 

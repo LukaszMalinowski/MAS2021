@@ -34,7 +34,6 @@ public class CarDto {
     }
 
 
-
     public long getCarId() {
         return carId;
     }

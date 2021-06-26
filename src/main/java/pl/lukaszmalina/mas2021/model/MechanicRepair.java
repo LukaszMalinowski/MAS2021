@@ -1,7 +1,5 @@
 package pl.lukaszmalina.mas2021.model;
 
-import pl.lukaszmalina.mas2021.dto.MechanicRepairDto;
-
 import javax.persistence.*;
 
 @Entity
